@@ -1,5 +1,5 @@
 # E32TLG — ESP32 Telegram Chat Device
-📄 **Documentation:** [English](E32TLG_v310_EN.html) | [Türkçe](E32TLG_v310_TR.html)
+📄 **Documentation:** [English](index.html) | [Türkçe](E32TLG_v310_TR.html)
 > ESP32-powered Telegram chat device with OLED + rotary encoder. Send & receive messages without a smartphone. Per-contact history, WiFi memory, buzzer alerts, and family group support. Just a knob and two buttons.
 
 ![Version](https://img.shields.io/badge/version-3.1.0-00e5ff?style=flat-square)
