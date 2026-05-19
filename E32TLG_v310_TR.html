@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E32TLG v3.1.0 — Proje Dokümantasyonu</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1525;
+    --bg3: #141c30;
+    --accent: #00e5ff;
+    --accent2: #00ff9d;
+    --accent3: #ff6b35;
+    --text: #c8d8e8;
+    --text2: #7a9bb5;
+    --border: rgba(0,229,255,0.15);
+    --glow: 0 0 20px rgba(0,229,255,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Arka plan grid efekti */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+
+  .logo-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0,229,255,0.3); }
+    50% { box-shadow: 0 0 40px rgba(0,229,255,0.6); }
+  }
+
+  .logo-icon svg { width: 28px; height: 28px; }
+
+  h1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-shadow: 0 0 30px rgba(0,229,255,0.5);
+  }
+
+  .tagline {
+    color: var(--text2);
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+
+  .version-badge {
+    display: inline-block;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 16px;
+    letter-spacing: 2px;
+  }
+
+  /* SECTION */
+  .section {
+    margin: 48px 0;
+  }
+
+  .section-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* KARTLAR */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(0,229,255,0.3);
+    box-shadow: 0 0 30px rgba(0,229,255,0.1);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  /* DONANIM */
+  .hardware-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .hw-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .hw-item:hover {
+    border-color: var(--accent2);
+    box-shadow: 0 0 20px rgba(0,255,157,0.1);
+    transform: translateY(-2px);
+  }
+
+  .hw-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .hw-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent2);
+    margin-bottom: 4px;
+  }
+
+  .hw-detail {
+    font-size: 0.85rem;
+    color: var(--text2);
+  }
+
+  /* PIN TABLOSU */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 16px;
+    background: rgba(0,229,255,0.08);
+    color: var(--accent);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+  }
+
+  tr:hover td { background: rgba(0,229,255,0.03); }
+
+  .pin-modül { color: var(--accent2); }
+  .pin-esp { color: var(--accent); }
+  .pin-note { color: var(--text2); font-size: 0.8rem; }
+
+  /* ÖZELLİKLER */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .feature-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: all 0.3s;
+  }
+
+  .feature-item:hover {
+    border-color: rgba(0,229,255,0.25);
+    transform: translateX(4px);
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+    font-size: 1rem;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* KONTROL */
+  .control-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .control-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .control-key {
+    font-family: 'Share Tech Mono', monospace;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .control-desc {
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  /* EKRAN DİYAGRAMI */
+  .oled-diagram {
+    background: #000;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    box-shadow: var(--glow);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .oled-row {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    color: #fff;
+  }
+
+  .oled-status {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .oled-divider {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 4px 0;
+  }
+
+  .oled-msg-sent { color: #aaffaa; }
+  .oled-msg-recv { color: #aaaaff; }
+  .oled-input { color: var(--accent2); }
+
+  /* KOD BLOĞU */
+  .code-block {
+    background: #060810;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: rgba(0,229,255,0.05);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-lang {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .copy-btn {
+    background: rgba(0,229,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    padding: 4px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+
+  .copy-btn:hover {
+    background: rgba(0,229,255,0.2);
+    box-shadow: 0 0 10px rgba(0,229,255,0.2);
+  }
+
+  .copy-btn.copied {
+    color: var(--accent2);
+    border-color: var(--accent2);
+  }
+
+  pre {
+    padding: 24px;
+    overflow-x: auto;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: #c8d8e8;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  pre::-webkit-scrollbar { width: 6px; height: 6px; }
+  pre::-webkit-scrollbar-track { background: #060810; }
+  pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Syntax renkleri */
+  .kw { color: #ff79c6; }
+  .cm { color: #6272a4; font-style: italic; }
+  .str { color: #f1fa8c; }
+  .num { color: #bd93f9; }
+  .fn { color: #50fa7b; }
+  .def { color: #8be9fd; }
+
+  /* HAZIR MESAJLAR */
+  .hazir-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .hazir-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hazir-num {
+    color: var(--text2);
+    font-size: 0.75rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+  }
+
+  .footer-title {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--accent);
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  .footer-sub {
+    color: var(--text2);
+    font-size: 0.85rem;
+  }
+
+  /* SCROLL BAR */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ANİMASYON */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="fade-in">
+    <div class="logo-line">
+      <div class="logo-icon">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="24" height="18" rx="2" stroke="#00e5ff" stroke-width="1.5"/>
+          <line x1="2" y1="8" x2="26" y2="8" stroke="#00e5ff" stroke-width="1"/>
+          <circle cx="20" cy="22" r="4" stroke="#00ff9d" stroke-width="1.5"/>
+          <line x1="18" y1="22" x2="22" y2="22" stroke="#00ff9d" stroke-width="1"/>
+          <line x1="20" y1="20" x2="20" y2="24" stroke="#00ff9d" stroke-width="1"/>
+        </svg>
+      </div>
+      <h1>E32TLG</h1>
+    </div>
+    <div class="tagline">ESP32 · OLED Enkoder · Telegram Bot Chat Cihazı</div>
+    <div class="version-badge">v3.1.0 — TAMAMLANDI</div>
+  </header>
+
+  <!-- ÖZET -->
+  <div class="section fade-in">
+    <div class="section-title">Proje Özeti</div>
+    <div class="card">
+      <p style="font-size:1.05rem; line-height:1.8; color:var(--text);">
+        E32TLG, bir <strong style="color:var(--accent)">ESP32</strong> mikrodenetleyici, 
+        <strong style="color:var(--accent)">1.3" OLED ekran + EC11 Enkoder + 2 Buton</strong> modülü ve 
+        <strong style="color:var(--accent)">Telegram Bot API</strong> kullanılarak geliştirilen iki yönlü kablosuz 
+        chat cihazıdır. Her kişi için ayrı mesaj geçmişi tutulur. CONFIRM uzun basışla kişi değiştirilebilir, 
+        BACK uzun basışla WiFi değiştirilebilir. Son 3 WiFi ağı hafızada saklanır. Aile Grubu seçeneğiyle 
+        Telegram grubu üzerinden herkese mesaj gönderilebilir. Başka kişiden mesaj gelince mektup ikonu yanıp söner.
+      </p>
+    </div>
+  </div>
+
+  <!-- DONANIM -->
+  <div class="section fade-in">
+    <div class="section-title">Donanım</div>
+    <div class="hardware-grid">
+      <div class="hw-item">
+        <div class="hw-icon">🧠</div>
+        <div class="hw-name">ESP32 DevKit</div>
+        <div class="hw-detail">WiFi + BT SoC<br>ISM2.4G 802.11 b/g/n</div>
+      </div>
+      <div class="hw-item">
+        <div class="hw-icon">🖥️</div>
+        <div class="hw-name">OLED Enkoder Modülü</div>
+        <div class="hw-detail">1.3" SH1106 128x64<br>EC11 + BACK + CONFIRM</div>
+      </div>
+      <div class="hw-item">
+        <div class="hw-icon">📡</div>
+        <div class="hw-name">WiFi</div>
+        <div class="hw-detail">2.4GHz<br>Telegram Bot API</div>
+      </div>
+      <div class="hw-item">
+        <div class="hw-icon">🔔</div>
+        <div class="hw-name">Pasif Buzzer</div>
+        <div class="hw-detail">Gönderilen / Gelen<br>mesaj bildirimi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIN BAĞLANTISI -->
+  <div class="section fade-in">
+    <div class="section-title">Pin Bağlantısı</div>
+    <div class="card" style="padding:0; overflow:hidden;">
+      <table>
+        <thead>
+          <tr>
+            <th>MODÜL PİNİ</th>
+            <th>ESP32 PİNİ</th>
+            <th>AÇIKLAMA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="pin-modül">VCC</td><td class="pin-esp">3.3V</td><td class="pin-note">⚠️ 5V değil!</td></tr>
+          <tr><td class="pin-modül">GND</td><td class="pin-esp">GND</td><td class="pin-note">Toprak</td></tr>
+          <tr><td class="pin-modül">SDA</td><td class="pin-esp">D21</td><td class="pin-note">I2C Data</td></tr>
+          <tr><td class="pin-modül">SCL</td><td class="pin-esp">D22</td><td class="pin-note">I2C Clock</td></tr>
+          <tr><td class="pin-modül">TRA (Enkoder A)</td><td class="pin-esp">D18</td><td class="pin-note">Interrupt</td></tr>
+          <tr><td class="pin-modül">TRB (Enkoder B)</td><td class="pin-esp">D19</td><td class="pin-note">Yön tespiti</td></tr>
+          <tr><td class="pin-modül">PSH (Enkoder Bas)</td><td class="pin-esp">D5</td><td class="pin-note">Harf onayla</td></tr>
+          <tr><td class="pin-modül">BAK</td><td class="pin-esp">D2</td><td class="pin-note">Geri / Sil</td></tr>
+          <tr><td class="pin-modül">CON</td><td class="pin-esp">D4</td><td class="pin-note">Gönder / Menü</td></tr>
+          <tr><td class="pin-modül">Buzzer (+)</td><td class="pin-esp">D23</td><td class="pin-note">Pasif buzzer</td></tr>
+          <tr><td class="pin-modül">Buzzer (-)</td><td class="pin-esp">GND</td><td class="pin-note">Toprak</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EKRAN DİYAGRAMI -->
+  <div class="section fade-in">
+    <div class="section-title">OLED Ekran Düzeni</div>
+
+    <!-- Ana ekran -->
+    <div style="margin-bottom:12px; color:var(--text2); font-size:0.85rem;">Ana Ekran (normal mod):</div>
+    <div class="oled-diagram">
+      <div class="oled-row oled-status" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>&gt;Annem</span>
+        <span style="display:flex; align-items:center; gap:8px;">
+          <!-- WiFi 4 çubuk ikonu (SVG) -->
+          <svg width="20" height="13" viewBox="0 0 20 13" fill="white">
+            <rect x="0" y="10" width="3" height="3" fill="white"/>
+            <rect x="4" y="8" width="3" height="5" fill="white"/>
+            <rect x="8" y="6" width="3" height="7" fill="white"/>
+            <rect x="12" y="4" width="3" height="9" fill="white"/>
+          </svg>
+          <!-- Telegram ✓ ikonu -->
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <polyline points="1,6 4,10 11,2" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <hr class="oled-divider">
+      <div class="oled-row oled-msg-recv">&lt;&lt; nerdesin?</div>
+      <div class="oled-row oled-msg-sent">&gt;&gt; geliyorum</div>
+      <hr class="oled-divider">
+      <div class="oled-row oled-input">&gt; tamam_</div>
+    </div>
+
+    <!-- Zayıf sinyal / bağlantı yok -->
+    <div style="margin-top:16px; margin-bottom:12px; color:var(--text2); font-size:0.85rem;">Zayıf sinyal / Telegram bağlantısı yok:</div>
+    <div class="oled-diagram">
+      <div class="oled-row oled-status" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>&gt;Babam</span>
+        <span style="display:flex; align-items:center; gap:8px;">
+          <!-- WiFi 1 çubuk dolu, 3 boş -->
+          <svg width="20" height="13" viewBox="0 0 20 13" fill="none">
+            <rect x="0" y="10" width="3" height="3" fill="white"/>
+            <rect x="4" y="8" width="3" height="5" stroke="white" stroke-width="1"/>
+            <rect x="8" y="6" width="3" height="7" stroke="white" stroke-width="1"/>
+            <rect x="12" y="4" width="3" height="9" stroke="white" stroke-width="1"/>
+          </svg>
+          <!-- Telegram X ikonu -->
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <line x1="1" y1="1" x2="11" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <line x1="11" y1="1" x2="1" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <hr class="oled-divider">
+      <div class="oled-row oled-msg-recv">&lt;&lt; tamam</div>
+      <div class="oled-row" style="color:#888;">(bağlantı zayıf)</div>
+      <hr class="oled-divider">
+      <div class="oled-row oled-input">&gt; evet_</div>
+    </div>
+
+    <!-- Kişi seçim ekranı -->
+    <div style="margin-top:16px; margin-bottom:12px; color:var(--text2); font-size:0.85rem;">Kişi seçim ekranı (açılışta):</div>
+    <div class="oled-diagram">
+      <div class="oled-row oled-status">E32EncTlg</div>
+      <hr class="oled-divider">
+      <div class="oled-row" style="color:#888; font-size:0.75rem;">Kime yazacaksin?</div>
+      <hr class="oled-divider" style="border-color:#222;">
+      <div class="oled-row" style="color:#888;">Annem</div>
+      <div class="oled-row" style="background:#fff; color:#000; padding:2px 4px; border-radius:2px;">Babam</div>
+      <div class="oled-row" style="color:#888;">Ablam</div>
+    </div>
+
+    <div style="text-align:center; margin-top:12px; color:var(--text2); font-size:0.85rem;">
+      &lt;&lt; = gelen &nbsp;|&nbsp; &gt;&gt; = gönderilen &nbsp;|&nbsp; &gt; = yazma alanı &nbsp;|&nbsp; ▌▌▌▌ = sinyal gücü &nbsp;|&nbsp; ✓/✗ = Telegram
+    </div>
+  </div>
+
+  <!-- KONTROL -->
+  <div class="section fade-in">
+    <div class="section-title">Kontrol Şeması</div>
+    <div class="control-list">
+      <div class="control-item">
+        <span class="control-key">Enkoder Döndür</span>
+        <span class="control-desc">Harf / karakter seç (a-z, 0-9, noktalama)</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">PSH (Bas)</span>
+        <span class="control-desc">Seçili harfi mesaja ekle</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">BACK (Kısa)</span>
+        <span class="control-desc">Son harfi sil / menüden çık</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">CONFIRM (Uzun 2sn)</span>
+        <span class="control-desc">Kişi seçim ekranına git — kişi değiştir</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">BACK (Uzun 3sn)</span>
+        <span class="control-desc">WiFi seçim ekranına git — ağ değiştir</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">CONFIRM (Tek)</span>
+        <span class="control-desc">Mesajı Telegram'a gönder</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">CONFIRM (Çift Tık)</span>
+        <span class="control-desc">Hazır mesaj menüsünü aç</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">Menüde Enkoder</span>
+        <span class="control-desc">Hazır mesajlar arasında gezin</span>
+      </div>
+      <div class="control-item">
+        <span class="control-key">Menüde CONFIRM</span>
+        <span class="control-desc">Seçili hazır mesajı gönder</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HAZIR MESAJLAR -->
+  <div class="section fade-in">
+    <div class="section-title">Hazır Mesajlar</div>
+    <div class="hazir-list">
+      <div class="hazir-item"><span class="hazir-num">01</span> Evet.</div>
+      <div class="hazir-item"><span class="hazir-num">02</span> Tamam.</div>
+      <div class="hazir-item"><span class="hazir-num">03</span> Hayir.</div>
+      <div class="hazir-item"><span class="hazir-num">04</span> Ciktim, geliyorum.</div>
+      <div class="hazir-item"><span class="hazir-num">05</span> Nerdesin?</div>
+      <div class="hazir-item"><span class="hazir-num">06</span> Bekliyorum.</div>
+      <div class="hazir-item"><span class="hazir-num">07</span> Bekle, geliyorum.</div>
+    </div>
+  </div>
+
+  <!-- ÖZELLİKLER -->
+  <div class="section fade-in">
+    <div class="section-title">Özellikler</div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">📶</div>
+        <div>
+          <div class="feature-title">WiFi Ağ Seçimi</div>
+          <div class="feature-desc">İlk açılışta çevredeki ağlar taranır, enkoder ile seçilir, şifre girilir ve kaydedilir.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div>
+          <div class="feature-title">İki Yönlü Chat</div>
+          <div class="feature-desc">Telegram botuna mesaj gönder, gelen mesajları OLED ekranda görüntüle.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⌨️</div>
+        <div>
+          <div class="feature-title">Enkoder Klavye</div>
+          <div class="feature-desc">Interrupt tabanlı enkoder ile akıcı harf seçimi. Telegram kontrolünde takılmaz.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📜</div>
+        <div>
+          <div class="feature-title">Mesaj Geçmişi</div>
+          <div class="feature-desc">Son 2 mesaj ekranda gösterilir. Uzun mesajlar aynı satırda kayan yazıyla görünür.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔊</div>
+        <div>
+          <div class="feature-title">Sesli Bildirim</div>
+          <div class="feature-desc">Mesaj gönderilince 2 tonlu, mesaj gelince 3 tonlu bildirim sesi çalar.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🌐</div>
+        <div>
+          <div class="feature-title">Türkçe Karakter</div>
+          <div class="feature-desc">Telegram'dan gelen ş→s, ğ→g, ü→u, ö→o, ç→c, ı→i dönüşümü otomatik yapılır.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💾</div>
+        <div>
+          <div class="feature-title">WiFi Hafızası</div>
+          <div class="feature-desc">Son 3 WiFi ağı kaydedilir. Kayıtlı ağlar * ile işaretlenir, şifre sormadan direkt bağlanır.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div>
+          <div class="feature-title">Kişiye Özel Geçmiş</div>
+          <div class="feature-desc">Her kişi için ayrı mesaj geçmişi tutulur. Kişi değiştirince o kişiyle olan mesajlar görünür.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📡</div>
+        <div>
+          <div class="feature-title">Bağlantı Göstergesi</div>
+          <div class="feature-desc">WiFi sinyal gücü (4 çubuk) ve Telegram durumu (✓/✗) ekranın üst çubuğunda gösterilir.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">👤</div>
+        <div>
+          <div class="feature-title">Kişi Seçimi</div>
+          <div class="feature-desc">Her açılışta kime mesaj atılacağı seçilir. Annem, Babam, Ablam, Aile Grubu arasında enkoder ile geçiş yapılır.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✉️</div>
+        <div>
+          <div class="feature-title">Akıllı Bildirim</div>
+          <div class="feature-desc">Başka kişilerden mesaj gelince sağ üstte mektup ikonu + isim 1 saniye yanıp söner. Aktif konuşulan kişiden mesaj gelince bildirim gösterilmez.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">👨‍👩‍👧</div>
+        <div>
+          <div class="feature-title">Aile Grubu</div>
+          <div class="feature-desc">Aile Grubu seçilince Telegram grubuna mesaj gider, herkes görür. Diğer seçeneklerde bireysel mesaj gider.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KİŞİ SEÇİMİ -->
+  <div class="section fade-in">
+    <div class="section-title">Kişi Listesi</div>
+    <div class="card">
+      <p style="color:var(--text2); font-size:0.9rem; margin-bottom:16px;">Her açılışta bu ekran çıkar. Enkoder ile kişiyi seç, PSH veya CONFIRM ile onayla. <strong style="color:var(--accent)">CONFIRM'e 2 saniye basılı tutarak</strong> istediğin zaman kişi değiştirebilirsin. Seçilen kişinin adı üst çubukta görünür.</p>
+      <div class="hazir-list">
+        <div class="hazir-item"><span class="hazir-num">01</span> Annem → Eşinin telefonu</div>
+        <div class="hazir-item"><span class="hazir-num">02</span> Babam → Senin telefon</div>
+        <div class="hazir-item"><span class="hazir-num">03</span> Ablam → Kızının telefonu</div>
+        <div class="hazir-item"><span class="hazir-num">04</span> * Aile Grubu → Telegram grup</div>
+      </div>
+      <div style="margin-top:16px; padding:12px; background:var(--bg3); border-radius:8px; border:1px solid var(--border);">
+        <div style="font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--accent); margin-bottom:8px;">KODA EKLENECEK CHAT ID'LER</div>
+        <div style="font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--text2); line-height:2;">
+          #define CHAT_ID_ANNEM &nbsp;"ESININ_CHAT_ID"<br>
+          #define CHAT_ID_BABAM &nbsp;"SENIN_CHAT_ID"<br>
+          #define CHAT_ID_ABLAM &nbsp;"KIZININ_CHAT_ID"<br>
+          #define CHAT_ID_GRUP &nbsp;&nbsp;"-GRUP_CHAT_ID"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELEGRAM KURULUM -->
+  <div class="section fade-in">
+    <div class="section-title">Telegram Kurulum Rehberi</div>
+
+    <!-- Adım 1: Bot Oluştur -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="background:rgba(0,229,255,0.15); border:1px solid var(--accent); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; color:var(--accent); font-size:0.9rem; flex-shrink:0;">1</div>
+        <div style="font-size:1.1rem; font-weight:700; color:var(--accent);">Bot Oluştur — @BotFather</div>
+      </div>
+      <div style="color:var(--text2); font-size:0.95rem; line-height:1.8; padding-left:44px;">
+        Telegram'da <strong style="color:var(--accent2)">@BotFather</strong>'ı ara ve mesaj gönder.<br>
+        <strong style="color:var(--text)">/newbot</strong> yaz → Bot adını gir → Kullanıcı adını gir (sonu bot ile bitmeli)<br>
+        BotFather sana şuna benzer bir <strong style="color:var(--accent)">Token</strong> verecek:<br>
+        <code style="background:var(--bg3); padding:4px 10px; border-radius:6px; color:var(--accent2); font-family:'Share Tech Mono',monospace; font-size:0.85rem;">1234567890:AAGgIaQsSz2a29SUOVgeZFA-otTS4cvhaHo</code><br>
+        Bu token'ı koda şuraya yaz:<br>
+        <code style="background:var(--bg3); padding:4px 10px; border-radius:6px; color:var(--accent); font-family:'Share Tech Mono',monospace; font-size:0.85rem;">#define BOT_TOKEN "tokenini_buraya_yaz"</code>
+      </div>
+    </div>
+
+    <!-- Adım 2: Kişisel Chat ID -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="background:rgba(0,229,255,0.15); border:1px solid var(--accent); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; color:var(--accent); font-size:0.9rem; flex-shrink:0;">2</div>
+        <div style="font-size:1.1rem; font-weight:700; color:var(--accent);">Kişisel Chat ID'leri Al</div>
+      </div>
+      <div style="color:var(--text2); font-size:0.95rem; line-height:1.8; padding-left:44px;">
+        Her kişinin telefonunda şunları yaptır:<br>
+        1. Telegram'da <strong style="color:var(--text)">senin botunu</strong> bulsun (@ ile ara)<br>
+        2. <strong style="color:var(--accent2)">/start</strong> yazsın<br>
+        3. Telegram'da <strong style="color:var(--accent2)">@userinfobot</strong>'u bulsun ve <strong style="color:var(--accent2)">/start</strong> yazsın<br>
+        4. <strong style="color:var(--accent)">Your ID</strong> yazan sayı o kişinin Chat ID'sidir<br><br>
+        <strong style="color:var(--text)">Alternatif yöntem:</strong> Şu kodu ESP32'ye yükle, kişi bota mesaj yazsın, Serial Monitor'de Chat ID görünür:
+        <div style="background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:12px; margin-top:8px; font-family:'Share Tech Mono',monospace; font-size:0.78rem; color:var(--text2); line-height:1.8;">
+          void loop() {<br>
+          &nbsp;&nbsp;int ms = bot.getUpdates(bot.last_message_received + 1);<br>
+          &nbsp;&nbsp;for(int i = 0; i &lt; ms; i++) {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Serial.print("Chat ID: ");<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Serial.println(bot.messages[i].chat_id);<br>
+          &nbsp;&nbsp;}<br>
+          &nbsp;&nbsp;delay(2000);<br>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Adım 3: Grup Oluştur -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="background:rgba(0,229,255,0.15); border:1px solid var(--accent); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; color:var(--accent); font-size:0.9rem; flex-shrink:0;">3</div>
+        <div style="font-size:1.1rem; font-weight:700; color:var(--accent);">Aile Grubu Oluştur</div>
+      </div>
+      <div style="color:var(--text2); font-size:0.95rem; line-height:1.8; padding-left:44px;">
+        1. Telegram'da yeni grup oluştur, aile üyelerini ekle<br>
+        2. Gruba <strong style="color:var(--text)">botunu ekle</strong> (üye ekle → botun adını ara)<br>
+        3. <strong style="color:var(--accent)">⚠️ Önemli:</strong> @BotFather → /mybots → Bot Settings → <strong style="color:var(--accent2)">Group Privacy → Turn OFF</strong> yap<br>
+        4. Grubun Chat ID'sini almak için grupta bir mesaj yaz, yukarıdaki kodu çalıştır<br>
+        5. Grup ID'si <strong style="color:var(--accent2)">eksi (-) işaretli</strong> olur. Örnek: <code style="background:var(--bg3); padding:2px 8px; border-radius:4px; color:var(--accent2); font-family:'Share Tech Mono',monospace;">-1703956306921</code>
+      </div>
+    </div>
+
+    <!-- Adım 4: Koda Yaz -->
+    <div class="card">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="background:rgba(0,255,157,0.15); border:1px solid var(--accent2); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; color:var(--accent2); font-size:0.9rem; flex-shrink:0;">4</div>
+        <div style="font-size:1.1rem; font-weight:700; color:var(--accent2);">Koda Ekle</div>
+      </div>
+      <div style="color:var(--text2); font-size:0.95rem; line-height:1.8; padding-left:44px;">
+        Tüm ID'leri aldıktan sonra kodun en üstündeki şu kısmı doldur:
+        <div style="background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:16px; margin-top:10px; font-family:'Share Tech Mono',monospace; font-size:0.82rem; line-height:2;">
+          <span style="color:#6272a4;">// ===== KİŞİ CHAT ID'LERİ =====</span><br>
+          <span style="color:#ff79c6;">#define</span> <span style="color:#8be9fd;">BOT_TOKEN</span> &nbsp;<span style="color:#f1fa8c;">"123456789:AAGgIaQs..."</span><br>
+          <span style="color:#ff79c6;">#define</span> <span style="color:#8be9fd;">CHAT_ID_ANNEM</span> <span style="color:#f1fa8c;">"eşinin_chat_id"</span><br>
+          <span style="color:#ff79c6;">#define</span> <span style="color:#8be9fd;">CHAT_ID_BABAM</span> <span style="color:#f1fa8c;">"senin_chat_id"</span><br>
+          <span style="color:#ff79c6;">#define</span> <span style="color:#8be9fd;">CHAT_ID_ABLAM</span> <span style="color:#f1fa8c;">"kızının_chat_id"</span><br>
+          <span style="color:#ff79c6;">#define</span> <span style="color:#8be9fd;">CHAT_ID_GRUP</span> &nbsp;<span style="color:#f1fa8c;">"-grup_chat_id"</span> <span style="color:#6272a4;">// eksi işareti dahil!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOD -->
+  <div class="section fade-in">
+    <div class="section-title">Son Kod (Arduino / ESP32)</div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">C++ / ARDUINO IDE</span>
+        <button class="copy-btn" onclick="copyCode(this)">KOPYALA</button>
+      </div>
+      <pre id="mainCode">#include &lt;Wire.h&gt;
+#include &lt;U8g2lib.h&gt;
+#include &lt;WiFi.h&gt;
+#include &lt;WiFiClientSecure.h&gt;
+#include &lt;UniversalTelegramBot.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;Preferences.h&gt;
+
+#define BOT_TOKEN "BOT_TOKENINIZ"
+
+// ===== KİŞİ CHAT ID'LERİ =====
+#define CHAT_ID_ANNEM  "ESININ_CHAT_ID"
+#define CHAT_ID_BABAM  "SENIN_CHAT_ID"
+#define CHAT_ID_ABLAM  "KIZININ_CHAT_ID"
+#define CHAT_ID_GRUP   "-GRUP_CHAT_ID"
+// ==============================
+
+#define ENC_A     18
+#define ENC_B     19
+#define ENC_BTN   5
+#define BTN_BACK  2
+#define BTN_CONFIRM 4
+#define BUZZER    23
+
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOT_TOKEN, client);
+U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
+Preferences preferences;
+
+const char* kisiler[] = {"Annem", "Babam", "Ablam", "Aile Grubu"};
+const char* chatIDler[] = {CHAT_ID_ANNEM, CHAT_ID_BABAM, CHAT_ID_ABLAM, CHAT_ID_GRUP};
+int kisiSayisi = 4;
+int seciliKisi = 0;
+String aktifChatID = "";
+bool kisiSecildi = false;
+
+String kayitliSSIDler[3] = {"", "", ""};
+String kayitliSifreler[3] = {"", "", ""};
+int kayitliAgSayisi = 0;
+
+const char* harfler[] = {
+  "a","b","c","d","e","f","g","h","i","j",
+  "k","l","m","n","o","p","r","s","t","u",
+  "v","y","z"," ",
+  "0","1","2","3","4","5","6","7","8","9",
+  ".","," ,"!","?","-","+"
+};
+int harfSayisi = 40;
+
+const char* sifreHarfleri[] = {
+  "a","b","c","d","e","f","g","h","i","j",
+  "k","l","m","n","o","p","q","r","s","t",
+  "u","v","w","x","y","z",
+  "A","B","C","D","E","F","G","H","I","J",
+  "K","L","M","N","O","P","Q","R","S","T",
+  "U","V","W","X","Y","Z",
+  "0","1","2","3","4","5","6","7","8","9",
+  ".","," ,"!","?","-","+","@","_","#","*"
+};
+int sifreHarfSayisi = 73;
+
+const char* hazirMesajlar[] = {
+  "Evet.", "Tamam.", "Hayir.",
+  "Ciktim, geliyorum.", "Nerdesin?",
+  "Bekliyorum.", "Bekle, geliyorum."
+};
+int hazirMesajSayisi = 7;
+int hazirMesajIndex = 0;
+
+int wifiMod = 0;
+int agSayisi = 0;
+int seciliAg = 0;
+String seciliSSID = "";
+String wifiSifre = "";
+bool wifiAyarTamam = false;
+
+int mod = 0;
+int harfIndex = 0;
+int sifreHarfIndex = 0;
+String mesaj = "";
+
+volatile int enkoderDegisim = 0;
+volatile int encA_son = HIGH;
+
+void IRAM_ATTR enkoderISR() {
+  int a = digitalRead(ENC_A);
+  int b = digitalRead(ENC_B);
+  if(encA_son == HIGH &amp;&amp; a == LOW) {
+    if(b == HIGH) enkoderDegisim++;
+    else enkoderDegisim--;
+  }
+  encA_son = a;
+}
+
+unsigned long sonTelegramKontrol = 0;
+#define TELEGRAM_ARALIK 3000
+
+// Her kişi için ayrı mesaj geçmişi
+String mesajGecmisi[4][4] = {{"","","",""},{"","","",""},{"","","",""},{"","","",""}};
+String mesajTipleri[4][4] = {{"","","",""},{"","","",""},{"","","",""},{"","","",""}};
+
+bool telegramBagli = false;
+unsigned long sonBasariliIstek = 0;
+
+unsigned long sonConfirmZamani = 0;
+#define CIFT_TIK_ARALIK 400
+#define UZUN_BAS_SURE 2000
+
+int kaymaOffset0 = 0;
+int kaymaOffset1 = 0;
+unsigned long sonKaymaZamani = 0;
+#define KAYMA_ARALIK 300
+#define EKRAN_KARAKTER 18
+
+int agKaymaOffset = 0;
+unsigned long sonAgKaymaZamani = 0;
+
+bool bildirimVar = false;
+unsigned long bildirimZamani = 0;
+#define BILDIRIM_SURE 2000
+
+void kayitliAglariYukle() {
+  kayitliAgSayisi = preferences.getInt("agSayisi", 0);
+  for(int i = 0; i &lt; kayitliAgSayisi; i++) {
+    kayitliSSIDler[i] = preferences.getString(("ssid" + String(i)).c_str(), "");
+    kayitliSifreler[i] = preferences.getString(("sifre" + String(i)).c_str(), "");
+  }
+}
+
+void wifiKaydet(String ssid, String sifre) {
+  for(int i = 0; i &lt; kayitliAgSayisi; i++) {
+    if(kayitliSSIDler[i] == ssid) {
+      kayitliSifreler[i] = sifre;
+      preferences.putString(("sifre" + String(i)).c_str(), sifre);
+      return;
+    }
+  }
+  if(kayitliAgSayisi &lt; 3) {
+    kayitliSSIDler[kayitliAgSayisi] = ssid;
+    kayitliSifreler[kayitliAgSayisi] = sifre;
+    kayitliAgSayisi++;
+  } else {
+    for(int i = 0; i &lt; 2; i++) {
+      kayitliSSIDler[i] = kayitliSSIDler[i+1];
+      kayitliSifreler[i] = kayitliSifreler[i+1];
+    }
+    kayitliSSIDler[2] = ssid;
+    kayitliSifreler[2] = sifre;
+  }
+  preferences.putInt("agSayisi", kayitliAgSayisi);
+  for(int i = 0; i &lt; kayitliAgSayisi; i++) {
+    preferences.putString(("ssid" + String(i)).c_str(), kayitliSSIDler[i]);
+    preferences.putString(("sifre" + String(i)).c_str(), kayitliSifreler[i]);
+  }
+}
+
+String kayitliSifreBul(String ssid) {
+  for(int i = 0; i &lt; kayitliAgSayisi; i++) {
+    if(kayitliSSIDler[i] == ssid) return kayitliSifreler[i];
+  }
+  return "";
+}
+
+void gonderilenSes() {
+  tone(BUZZER, 1000, 100); delay(150); tone(BUZZER, 1500, 100);
+}
+
+void gelenSes() {
+  tone(BUZZER, 800, 100); delay(150);
+  tone(BUZZER, 800, 100); delay(150);
+  tone(BUZZER, 1200, 150);
+}
+
+int chatIDdenKisiIndex(String chatID, String fromID) {
+  for(int i = 0; i &lt; kisiSayisi; i++) {
+    if(chatID == chatIDler[i]) return i;
+  }
+  if(chatID == CHAT_ID_GRUP) return 3;
+  for(int i = 0; i &lt; kisiSayisi - 1; i++) {
+    if(fromID == chatIDler[i]) return 3;
+  }
+  return -1;
+}
+
+bool aktifKisidanMi(int kisiIndex) {
+  return kisiIndex == seciliKisi;
+}
+
+String turkceLatine(String m) {
+  String sonuc = "";
+  int i = 0;
+  while(i &lt; (int)m.length()) {
+    unsigned char c = m[i];
+    if(c == 0xC4) {
+      unsigned char c2 = m[i+1];
+      if(c2 == 0x9F || c2 == 0x9E) sonuc += "g";
+      else if(c2 == 0xB1) sonuc += "i";
+      else if(c2 == 0xB0) sonuc += "I";
+      else sonuc += "?";
+      i += 2;
+    } else if(c == 0xC5) {
+      unsigned char c2 = m[i+1];
+      if(c2 == 0x9F || c2 == 0x9E) sonuc += "s";
+      else sonuc += "?";
+      i += 2;
+    } else if(c == 0xC3) {
+      unsigned char c2 = m[i+1];
+      if(c2 == 0xB6 || c2 == 0x96) sonuc += "o";
+      else if(c2 == 0xBC || c2 == 0x9C) sonuc += "u";
+      else if(c2 == 0xA7 || c2 == 0x87) sonuc += "c";
+      else sonuc += "?";
+      i += 2;
+    } else { sonuc += (char)c; i++; }
+  }
+  return sonuc;
+}
+
+void mesajEkle(String mesajMetni, String tip, int kisiIndex) {
+  if(kisiIndex &lt; 0 || kisiIndex &gt;= kisiSayisi) return;
+  if(tip == "o") mesajMetni = turkceLatine(mesajMetni);
+  for(int i = 3; i &gt; 0; i--) {
+    mesajGecmisi[kisiIndex][i] = mesajGecmisi[kisiIndex][i-1];
+    mesajTipleri[kisiIndex][i] = mesajTipleri[kisiIndex][i-1];
+  }
+  mesajGecmisi[kisiIndex][0] = mesajMetni;
+  mesajTipleri[kisiIndex][0] = tip;
+  if(kisiIndex == seciliKisi) { kaymaOffset0 = 0; kaymaOffset1 = 0; }
+}
+
+String kaydirilmisMesaj(String m, int offset) {
+  String tam = m + "   ";
+  if((int)tam.length() &lt;= EKRAN_KARAKTER) return tam;
+  if(offset &gt;= (int)tam.length()) offset = 0;
+  String parcali = tam.substring(offset);
+  if((int)parcali.length() &lt; EKRAN_KARAKTER)
+    parcali += tam.substring(0, EKRAN_KARAKTER - parcali.length());
+  return parcali.substring(0, EKRAN_KARAKTER);
+}
+
+String kaydirilmisAg(String m, int offset) {
+  String tam = m + "   ";
+  if((int)tam.length() &lt;= 18) return tam;
+  if(offset &gt;= (int)tam.length()) offset = 0;
+  String parcali = tam.substring(offset);
+  if((int)parcali.length() &lt; 18)
+    parcali += tam.substring(0, 18 - parcali.length());
+  return parcali.substring(0, 18);
+}
+
+void wifiIkonu(int x, bool bagli) {
+  int yukseklikler[] = {3, 5, 7, 9};
+  int rssi = WiFi.RSSI();
+  int doluCubuk = 0;
+  if(bagli) {
+    if(rssi &gt;= -55) doluCubuk = 4;
+    else if(rssi &gt;= -65) doluCubuk = 3;
+    else if(rssi &gt;= -75) doluCubuk = 2;
+    else doluCubuk = 1;
+  }
+  for(int i = 0; i &lt; 4; i++) {
+    int cx = x + i * 4; int cy = 11; int h = yukseklikler[i];
+    if(i &lt; doluCubuk) u8g2.drawBox(cx, cy-h, 3, h);
+    else u8g2.drawFrame(cx, cy-h, 3, h);
+  }
+  if(!bagli) u8g2.drawStr(x+18, 10, "!");
+}
+
+void telegramIkonu(int x, bool bagli) {
+  if(bagli) {
+    u8g2.drawLine(x, 6, x+3, 10); u8g2.drawLine(x+1, 6, x+4, 10);
+    u8g2.drawLine(x+3, 10, x+9, 2); u8g2.drawLine(x+4, 10, x+10, 2);
+  } else {
+    u8g2.drawLine(x, 2, x+9, 11); u8g2.drawLine(x+1, 2, x+10, 11);
+    u8g2.drawLine(x+9, 2, x, 11); u8g2.drawLine(x+10, 2, x+1, 11);
+  }
+}
+
+void mektupIkonu(int x) {
+  u8g2.drawFrame(x, 3, 12, 8);
+  u8g2.drawLine(x, 3, x+6, 8);
+  u8g2.drawLine(x+12, 3, x+6, 8);
+}
+
+void kisiSecimEkrani() {
+  u8g2.clearBuffer();
+  u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, "E32TLG");
+  u8g2.drawLine(0, 13, 128, 13);
+  u8g2.drawStr(0, 25, "Kime yazacaksin?");
+  u8g2.drawLine(0, 27, 128, 27);
+  if(seciliKisi &gt; 0) u8g2.drawStr(0, 38, kisiler[seciliKisi-1]);
+  u8g2.drawBox(0, 40, 128, 12);
+  u8g2.setDrawColor(0);
+  String si = String(kisiler[seciliKisi]);
+  if(seciliKisi == 3) si = "* " + si;
+  u8g2.drawStr(2, 50, si.c_str());
+  u8g2.setDrawColor(1);
+  if(seciliKisi &lt; kisiSayisi-1) u8g2.drawStr(0, 62, kisiler[seciliKisi+1]);
+  u8g2.sendBuffer();
+}
+
+void agTaraEkrani() {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, "E32TLG"); u8g2.drawLine(0, 13, 128, 13);
+  u8g2.drawStr(0, 35, "WiFi taranıyor..."); u8g2.sendBuffer();
+}
+
+void agSecimEkrani() {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, "WiFi Sec:"); u8g2.drawLine(0, 13, 128, 13);
+  if(seciliAg &gt; 0) {
+    String onceki = WiFi.SSID(seciliAg-1).substring(0,18);
+    if(kayitliSifreBul(WiFi.SSID(seciliAg-1)) != "") onceki += "*";
+    u8g2.drawStr(0, 25, onceki.c_str());
+  }
+  u8g2.drawBox(0, 27, 128, 12); u8g2.setDrawColor(0);
+  String sa = kaydirilmisAg(WiFi.SSID(seciliAg), agKaymaOffset);
+  if(kayitliSifreBul(WiFi.SSID(seciliAg)) != "") sa += "*";
+  u8g2.drawStr(2, 37, sa.c_str()); u8g2.setDrawColor(1);
+  if(seciliAg &lt; agSayisi-1) {
+    String sonraki = WiFi.SSID(seciliAg+1).substring(0,18);
+    if(kayitliSifreBul(WiFi.SSID(seciliAg+1)) != "") sonraki += "*";
+    u8g2.drawStr(0, 52, sonraki.c_str());
+  }
+  if(kayitliSifreBul(WiFi.SSID(seciliAg)) != "")
+    u8g2.drawStr(0, 63, "PSH:baglan *=kayitli");
+  else u8g2.drawStr(0, 63, "PSH:sec BACK:tara");
+  u8g2.sendBuffer();
+}
+
+void sifreGirEkrani() {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, seciliSSID.substring(0,18).c_str());
+  u8g2.drawLine(0, 13, 128, 13); u8g2.drawStr(0, 25, "Sifre:");
+  String sg = wifiSifre + String(sifreHarfleri[sifreHarfIndex]);
+  if(sg.length() &gt; 18) sg = sg.substring(sg.length()-18);
+  u8g2.drawStr(0, 40, sg.c_str());
+  u8g2.drawLine(0, 50, 128, 50); u8g2.drawStr(0, 62, "PSH:ekle CON:baglan");
+  u8g2.sendBuffer();
+}
+
+void baglaniyorEkrani(String ssid) {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, "E32TLG"); u8g2.drawLine(0, 13, 128, 13);
+  u8g2.drawStr(0, 30, "Baglanıyor...");
+  u8g2.drawStr(0, 45, ssid.substring(0,20).c_str()); u8g2.sendBuffer();
+}
+
+void ekraniGuncelle() {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  String baslik = "&gt;" + String(kisiler[seciliKisi]);
+  u8g2.drawStr(0, 10, baslik.c_str());
+  if(bildirimVar &amp;&amp; millis()-bildirimZamani &lt; BILDIRIM_SURE) {
+    if((millis()-bildirimZamani) % 400 &lt; 200) mektupIkonu(114);
+  } else {
+    bildirimVar = false;
+    wifiIkonu(90, WiFi.status() == WL_CONNECTED);
+    if(WiFi.status() == WL_CONNECTED) telegramIkonu(114, telegramBagli);
+  }
+  u8g2.drawLine(0, 13, 128, 13);
+  if(mod == 0) {
+    if(mesajGecmisi[seciliKisi][1] != "") {
+      String s1 = (mesajTipleri[seciliKisi][1]=="ben") ? "&gt;&gt;" : "&lt;&lt;";
+      u8g2.drawStr(0, 27, (s1+kaydirilmisMesaj(mesajGecmisi[seciliKisi][1],kaymaOffset1)).c_str());
+    }
+    if(mesajGecmisi[seciliKisi][0] != "") {
+      String s0 = (mesajTipleri[seciliKisi][0]=="ben") ? "&gt;&gt;" : "&lt;&lt;";
+      u8g2.drawStr(0, 40, (s0+kaydirilmisMesaj(mesajGecmisi[seciliKisi][0],kaymaOffset0)).c_str());
+    }
+    u8g2.drawLine(0, 50, 128, 50);
+    u8g2.drawStr(0, 62, ("&gt;"+mesaj+String(harfler[harfIndex])).c_str());
+  } else {
+    u8g2.drawStr(0, 25, "Hazir mesaj:"); u8g2.drawLine(0, 27, 128, 27);
+    if(hazirMesajIndex &gt; 0)
+      u8g2.drawStr(0, 38, String(hazirMesajlar[hazirMesajIndex-1]).substring(0,22).c_str());
+    u8g2.drawBox(0, 40, 128, 12); u8g2.setDrawColor(0);
+    u8g2.drawStr(2, 50, String(hazirMesajlar[hazirMesajIndex]).substring(0,22).c_str());
+    u8g2.setDrawColor(1);
+    if(hazirMesajIndex &lt; hazirMesajSayisi-1)
+      u8g2.drawStr(0, 62, String(hazirMesajlar[hazirMesajIndex+1]).substring(0,22).c_str());
+  }
+  u8g2.sendBuffer();
+}
+
+void mesajGonder(String m) {
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 20, ("-> " + String(kisiler[seciliKisi])).c_str());
+  u8g2.drawStr(0, 40, "Gonderiliyor..."); u8g2.sendBuffer();
+  if(bot.sendMessage(aktifChatID, m, "")) {
+    mesajEkle(m, "ben", seciliKisi);
+    telegramBagli = true; sonBasariliIstek = millis(); gonderilenSes();
+  }
+}
+
+bool wifiBaglan(String ssid, String sifre) {
+  baglaniyorEkrani(ssid);
+  WiFi.begin(ssid.c_str(), sifre.c_str());
+  int d = 0;
+  while(WiFi.status() != WL_CONNECTED &amp;&amp; d &lt; 20) { delay(500); d++; }
+  return WiFi.status() == WL_CONNECTED;
+}
+
+void wifiSecimineGit() {
+  wifiAyarTamam = false; kisiSecildi = false;
+  WiFi.disconnect(); agTaraEkrani();
+  agSayisi = WiFi.scanNetworks();
+  seciliAg = 0; agKaymaOffset = 0; wifiMod = 0; enkoderDegisim = 0;
+  agSecimEkrani();
+}
+
+void setup() {
+  Wire.begin(21, 22); u8g2.begin();
+  pinMode(ENC_A, INPUT_PULLUP); pinMode(ENC_B, INPUT_PULLUP);
+  pinMode(ENC_BTN, INPUT_PULLUP); pinMode(BTN_BACK, INPUT_PULLUP);
+  pinMode(BTN_CONFIRM, INPUT_PULLUP); pinMode(BUZZER, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(ENC_A), enkoderISR, CHANGE);
+  preferences.begin("e32tlg", false);
+  kayitliAglariYukle();
+  u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.drawStr(0, 10, "E32TLG"); u8g2.drawLine(0, 13, 128, 13);
+  if(kayitliAgSayisi &gt; 0) {
+    String kSSID = kayitliSSIDler[kayitliAgSayisi-1];
+    String kSifre = kayitliSifreler[kayitliAgSayisi-1];
+    u8g2.drawStr(0, 30, "Kayitli WiFi:");
+    u8g2.drawStr(0, 45, kSSID.substring(0,20).c_str()); u8g2.sendBuffer(); delay(1000);
+    if(wifiBaglan(kSSID, kSifre)) {
+      u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+      u8g2.drawStr(0, 10, "E32TLG"); u8g2.drawLine(0, 13, 128, 13);
+      u8g2.drawStr(0, 35, "WiFi TAMAM!"); u8g2.sendBuffer(); delay(1000);
+      client.setInsecure(); telegramBagli = true;
+      sonBasariliIstek = millis(); wifiAyarTamam = true;
+      seciliKisi = 0; kisiSecimEkrani(); return;
+    } else {
+      u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+      u8g2.drawStr(0, 30, "Baglanamadı!");
+      u8g2.drawStr(0, 45, "Ag taranıyor..."); u8g2.sendBuffer(); delay(1500);
+    }
+  }
+  agTaraEkrani(); agSayisi = WiFi.scanNetworks();
+  seciliAg = 0; wifiMod = 0; agSecimEkrani();
+}
+
+void loop() {
+  if(!wifiAyarTamam) {
+    if(millis()-sonAgKaymaZamani &gt; 300) {
+      sonAgKaymaZamani = millis();
+      if(wifiMod==0 &amp;&amp; (int)WiFi.SSID(seciliAg).length()&gt;18) {
+        agKaymaOffset++;
+        if(agKaymaOffset &gt;= (int)(WiFi.SSID(seciliAg).length()+3)) agKaymaOffset=0;
+        agSecimEkrani();
+      }
+    }
+    if(enkoderDegisim != 0) {
+      if(wifiMod == 0) {
+        if(enkoderDegisim &gt; 0) seciliAg = (seciliAg+1) % agSayisi;
+        else seciliAg = (seciliAg-1+agSayisi) % agSayisi;
+        agKaymaOffset = 0; enkoderDegisim = 0; agSecimEkrani();
+      } else {
+        if(enkoderDegisim &gt; 0) sifreHarfIndex = (sifreHarfIndex+1) % sifreHarfSayisi;
+        else { sifreHarfIndex--; if(sifreHarfIndex &lt; 0) sifreHarfIndex = sifreHarfSayisi-1; }
+        enkoderDegisim = 0; sifreGirEkrani();
+      }
+    }
+    if(digitalRead(ENC_BTN)==LOW) {
+      delay(200);
+      if(wifiMod==0) {
+        seciliSSID = WiFi.SSID(seciliAg);
+        String ks = kayitliSifreBul(seciliSSID);
+        if(ks != "") {
+          if(wifiBaglan(seciliSSID, ks)) {
+            u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.drawStr(0,10,"E32TLG"); u8g2.drawLine(0,13,128,13);
+            u8g2.drawStr(0,35,"WiFi TAMAM!"); u8g2.sendBuffer(); delay(1000);
+            client.setInsecure(); telegramBagli=true;
+            sonBasariliIstek=millis(); wifiAyarTamam=true;
+            seciliKisi=0; kisiSecimEkrani();
+          } else { wifiSifre=""; sifreHarfIndex=0; wifiMod=1; sifreGirEkrani(); }
+        } else { wifiSifre=""; sifreHarfIndex=0; wifiMod=1; sifreGirEkrani(); }
+      } else { wifiSifre += String(sifreHarfleri[sifreHarfIndex]); sifreGirEkrani(); }
+    }
+    if(digitalRead(BTN_BACK)==LOW) {
+      delay(200);
+      if(wifiMod==1) {
+        if(wifiSifre.length()&gt;0) { wifiSifre=wifiSifre.substring(0,wifiSifre.length()-1); sifreGirEkrani(); }
+        else { wifiMod=0; agKaymaOffset=0; agSecimEkrani(); }
+      } else { agTaraEkrani(); agSayisi=WiFi.scanNetworks(); seciliAg=0; agKaymaOffset=0; agSecimEkrani(); }
+    }
+    if(digitalRead(BTN_CONFIRM)==LOW) {
+      delay(200);
+      if(wifiMod==1) {
+        wifiSifre += String(sifreHarfleri[sifreHarfIndex]);
+        if(wifiBaglan(seciliSSID, wifiSifre)) {
+          wifiKaydet(seciliSSID, wifiSifre);
+          u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+          u8g2.drawStr(0,10,"E32TLG"); u8g2.drawLine(0,13,128,13);
+          u8g2.drawStr(0,35,"WiFi TAMAM!"); u8g2.sendBuffer(); delay(1000);
+          client.setInsecure(); telegramBagli=true;
+          sonBasariliIstek=millis(); wifiAyarTamam=true;
+          seciliKisi=0; kisiSecimEkrani();
+        } else {
+          u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+          u8g2.drawStr(0,30,"Baglanamadı!"); u8g2.drawStr(0,45,"Sifre yanlis?");
+          u8g2.sendBuffer(); delay(2000); wifiSifre=""; sifreHarfIndex=0; sifreGirEkrani();
+        }
+      }
+    }
+    return;
+  }
+
+  if(!kisiSecildi) {
+    if(enkoderDegisim != 0) {
+      if(enkoderDegisim&gt;0) seciliKisi=(seciliKisi+1)%kisiSayisi;
+      else seciliKisi=(seciliKisi-1+kisiSayisi)%kisiSayisi;
+      enkoderDegisim=0; kisiSecimEkrani();
+    }
+    if(digitalRead(ENC_BTN)==LOW || digitalRead(BTN_CONFIRM)==LOW) {
+      delay(200);
+      aktifChatID = chatIDler[seciliKisi];
+      kisiSecildi = true; kaymaOffset0=0; kaymaOffset1=0;
+      enkoderDegisim=0; ekraniGuncelle();
+    }
+    return;
+  }
+
+  if(enkoderDegisim != 0) {
+    if(mod==0) {
+      if(enkoderDegisim&gt;0) harfIndex=(harfIndex+1)%harfSayisi;
+      else harfIndex=(harfIndex-1+harfSayisi)%harfSayisi;
+    } else {
+      if(enkoderDegisim&gt;0) hazirMesajIndex=(hazirMesajIndex+1)%hazirMesajSayisi;
+      else hazirMesajIndex=(hazirMesajIndex-1+hazirMesajSayisi)%hazirMesajSayisi;
+    }
+    enkoderDegisim=0; ekraniGuncelle();
+  }
+
+  if(bildirimVar &amp;&amp; millis()-bildirimZamani &gt;= BILDIRIM_SURE) { bildirimVar=false; ekraniGuncelle(); }
+  if(bildirimVar &amp;&amp; millis()-bildirimZamani &lt; BILDIRIM_SURE) { ekraniGuncelle(); delay(50); }
+
+  if(millis()-sonKaymaZamani &gt; KAYMA_ARALIK) {
+    sonKaymaZamani=millis(); bool g=false;
+    if(mesajGecmisi[seciliKisi][0].length()&gt;EKRAN_KARAKTER) {
+      kaymaOffset0++;
+      if(kaymaOffset0&gt;=(int)(mesajGecmisi[seciliKisi][0].length()+3)) kaymaOffset0=0; g=true;
+    }
+    if(mesajGecmisi[seciliKisi][1].length()&gt;EKRAN_KARAKTER) {
+      kaymaOffset1++;
+      if(kaymaOffset1&gt;=(int)(mesajGecmisi[seciliKisi][1].length()+3)) kaymaOffset1=0; g=true;
+    }
+    if(g) ekraniGuncelle();
+  }
+
+  if(digitalRead(ENC_BTN)==LOW) {
+    if(mod==0) { mesaj+=String(harfler[harfIndex]); ekraniGuncelle(); }
+    delay(300);
+  }
+
+  if(digitalRead(BTN_BACK)==LOW) {
+    unsigned long bz=millis();
+    while(digitalRead(BTN_BACK)==LOW) {
+      if(millis()-bz &gt; 3000) {
+        u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 30, "WiFi degistiriliyor..."); u8g2.sendBuffer();
+        delay(1000); wifiSecimineGit(); return;
+      }
+    }
+    if(millis()-bz &lt; 3000) {
+      if(mod==1) { mod=0; ekraniGuncelle(); }
+      else if(mesaj.length()&gt;0) { mesaj=mesaj.substring(0,mesaj.length()-1); ekraniGuncelle(); }
+    }
+    delay(300);
+  }
+
+  if(digitalRead(BTN_CONFIRM)==LOW) {
+    unsigned long cz = millis();
+    while(digitalRead(BTN_CONFIRM)==LOW) {
+      if(millis()-cz &gt; UZUN_BAS_SURE) {
+        u8g2.clearBuffer(); u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 30, "Kisi secimi..."); u8g2.sendBuffer();
+        delay(500); kisiSecildi=false; mesaj=""; enkoderDegisim=0;
+        kisiSecimEkrani(); return;
+      }
+    }
+    unsigned long simdi = millis();
+    if(millis()-cz &lt; UZUN_BAS_SURE) {
+      if(mod==1) {
+        mesajGonder(String(hazirMesajlar[hazirMesajIndex]));
+        mod=0; hazirMesajIndex=0; delay(500); ekraniGuncelle();
+      } else {
+        if(sonConfirmZamani != 0 &amp;&amp; (simdi-sonConfirmZamani&lt;CIFT_TIK_ARALIK)) {
+          sonConfirmZamani=0; mod=1; hazirMesajIndex=0; ekraniGuncelle();
+        } else { sonConfirmZamani=simdi; }
+      }
+    }
+    delay(200);
+  }
+
+  if(sonConfirmZamani != 0 &amp;&amp; (millis()-sonConfirmZamani&gt;CIFT_TIK_ARALIK)) {
+    if(mod==0 &amp;&amp; mesaj.length()&gt;0) {
+      mesajGonder(mesaj); mesaj=""; harfIndex=0; delay(500); ekraniGuncelle();
+    }
+    sonConfirmZamani=0;
+  }
+
+  if(millis()-sonTelegramKontrol &gt; TELEGRAM_ARALIK) {
+    if(WiFi.status()==WL_CONNECTED) {
+      int ms=bot.getUpdates(bot.last_message_received+1);
+      if(ms&gt;0) {
+        for(int i=0;i&lt;ms;i++) {
+          int ki = chatIDdenKisiIndex(bot.messages[i].chat_id, bot.messages[i].from_id);
+          if(ki &gt;= 0) {
+            mesajEkle(bot.messages[i].text, "o", ki);
+            if(!aktifKisidanMi(ki)) { bildirimVar=true; bildirimZamani=millis(); }
+          }
+        }
+        telegramBagli=true; sonBasariliIstek=millis(); gelenSes(); ekraniGuncelle();
+      }
+      if(millis()-sonBasariliIstek&gt;15000) telegramBagli=false;
+    }
+    sonTelegramKontrol=millis();
+  }
+}</pre>
+    </div>
+  </div>
+
+  <!-- KÜTÜPHANELer -->
+
+  <div class="section fade-in">
+    <div class="section-title">Gerekli Kütüphaneler</div>
+    <div class="card" style="padding:0; overflow:hidden;">
+      <table>
+        <thead>
+          <tr>
+            <th>KÜTÜPHANE</th>
+            <th>YAZAR</th>
+            <th>KURULUM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>U8g2</td><td>oliver</td><td class="pin-note">Library Manager → "U8g2"</td></tr>
+          <tr><td>UniversalTelegramBot</td><td>Brian Lough</td><td class="pin-note">Library Manager → "UniversalTelegramBot"</td></tr>
+          <tr><td>ArduinoJson</td><td>Benoit Blanchon</td><td class="pin-note">Library Manager → "ArduinoJson"</td></tr>
+          <tr><td>Preferences</td><td>ESP32 Built-in</td><td class="pin-note">Otomatik gelir</td></tr>
+          <tr><td>ESP32 Board</td><td>Espressif</td><td class="pin-note">Board Manager → "esp32 by Espressif"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-title">E32TLG by <a href="https://github.com/cihansolakoglu">SOGLU</a></div>
+    <div class="footer-sub">ESP32 + OLED Enkoder + Telegram Bot Chat Cihazı · v3.1.0</div>
+  </footer>
+
+</div>
+
+<script>
+  function copyCode(btn) {
+    const pre = document.getElementById('mainCode');
+    // HTML entity'leri çöz
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'KOPYALANDI ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'KOPYALA';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
